@@ -1,5 +1,10 @@
 <?php
 
+//Fueling
+
+$fuelings = [];
+$fuelings['Dots'] = ['WOG', 'TNK', 'Saileint'];
+$fuelings['Tickets'] = ['30', '15', '10'];
 
 // users
 
@@ -40,12 +45,21 @@ $cars = array('Mersedes' =>
 					['grey', 3], ['yellow', 2], ['black', 1]]
 			]
 		];
-	
+
+        function fuelTicket($fuelings)
+        {
+            $dots = array_rand(array_flip($fuelings['Dots']));
+            $tickets = array_rand(array_flip($fuelings['Tickets']));
+            return 'Also, you have a ticket for a free refueling of ' .
+                    $tickets . ' liters of gasoline at the ' . $dots . 
+                    ' gas station for this car';
+        }
+        
 function owner($users){
 $gender = array_rand(array_flip($users['Gender']));
 if ($gender == 'mr') {
 	$names = array_rand(array_flip($users['Names']['0']));
-} else $names = array_rand(array_flip($users['Names']['1']));
+} else  $names = array_rand(array_flip($users['Names']['1']));
 $surnames = array_rand(array_flip($users['Surnames']));
 
 return 'Dear  ' . $gender. ' '. $names . ' ' . $surnames . '!';
@@ -61,7 +75,7 @@ function randGarage($array) {
 			$rand_build = array_rand($array[$city][$build]);//color
 			$arr[] = $array[$city][$build][$rand_build];
 			return $arr;
-};
+}
 
 function garageText($array) {
 	$text = "Your garage in " . $array[0] . " consist of " . $array[1] . ", " . "his colour is " . $array[2][0] . ", " . "number of seats " . $array[2][1];
@@ -75,7 +89,7 @@ function cars($cars)
     return $mark." ".$model;
 }
 
-function input($users, $cars, $garage) {
+function input($users, $cars, $garage, $fuelings) {
 
 $count_garage = rand(1, 5);
 
@@ -87,8 +101,9 @@ $count_garage = rand(1, 5);
         echo 'In this garage you have next cars: '.PHP_EOL;
 		for ($j=1; $j <= $count_car; $j++){
 	    echo '#'.$j.' car: '.cars($cars).PHP_EOL;
+            echo fuelTicket($fuelings) . PHP_EOL;
 	}
 	   }
 }
 
-input($users, $cars, $garage);
+input($users, $cars, $garage, $fuelings);
